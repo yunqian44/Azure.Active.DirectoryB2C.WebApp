@@ -1,0 +1,51 @@
+﻿@using Microsoft.AspNetCore.Authentication
+@using System.Security.Principal
+@using Microsoft.AspNetCore.Authentication.AzureADB2C.UI
+@using Microsoft.Extensions.Options
+@inject IOptionsMonitor<AzureADB2COptions> AzureADB2COptions
+
+@{
+    var options = AzureADB2COptions.Get(AzureADB2CDefaults.AuthenticationScheme);
+}
+@{
+    ViewData["Title"] = "About";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*<ul class="navbar-nav">
+        @if (User.Identity.IsAuthenticated)
+        {
+
+            <li class="nav-item">
+                <span class="nav-text text-dark">Hello @User.Identity.Name!</span>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="AzureADB2C" asp-controller="Account" asp-action="SignOut">Sign out</a>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="AzureADB2C" asp-controller="Account" asp-action="SignIn">Sign in</a>
+            </li>
+        }
+    </ul>*@
+<h1>@ViewData["Message"]</h1>
+
+<div>
+    <strong>id_token</strong>
+    <span>@await ViewContext.HttpContext.GetTokenAsync("id_token")</span>
+</div>
+<div>
+    <strong>access_token</strong>
+    <span>@await ViewContext.HttpContext.GetTokenAsync("access_token")</span>
+</div>
+
+<dl>
+    @foreach (var claim in User.Claims)
+    {
+        <dt>@claim.Type</dt>
+        <dd>@claim.Value</dd>
+    }
+</dl>
+
